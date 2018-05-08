@@ -17,17 +17,18 @@ $bt = $database->select("beats", [
 	"img"
 ], [
 	'LIMIT' => [$offset, 15],
-	"ORDER" => ["downloads" => "DESC",]
+	"ORDER" => ["upvotes" => "DESC",]
 ]);
-$pagetitle = "Beat Saver ";
+$pagetitle = "Beat Saver - Top Rated";
 require("header.php");
 ?>
     <div class="container">
       <div class="row">
 	<div class="col-md-1"><br><br><br><br></div>
         <div class="col-md-12">
-<?php $i = 0;
- foreach($bt as $brow) {
+<?php
+$i = 0;
+foreach($bt as $brow) {
 $i++;
 if(!empty($brow['id'])){ ?>
           <h2><a href="details.php?id=<?php echo $brow['id']; ?>"><?php echo $brow["beatname"]; ?></a></h2>
@@ -58,13 +59,15 @@ if(!empty($brow['id'])){ ?>
 
 <?php } } //END OF WHILE ?>
 <?php if($i > 14){
-?><a href="index.php?off=<?php echo $offset+15;?>" class="pull-right">
+?><a href="topstar.php?off=<?php echo $offset+15;?>" class="pull-right">
 <button type="button" class="btn btn-default">
   <span class="glyphicon glyphicon-forward" aria-hidden="true"></span> Next Page (<?php echo $offset+15; ?>)
 </button>
-</a><?php }else{ ?>
+</a>
+<?php }else{ ?>
 <b>End of List</b>
 <?php } ?>
+
        </div>
       <hr>
     </div> <!-- /container -->

@@ -24,7 +24,7 @@ if ($zip) {
 }
 zip_close($zip);
 //decode json
-if(empty($json["songName"])){die("Missing Song Name, Note: Songname must be longer then three letters");}
+if(empty($json["songName"])){die("Missing Song Name, Note: Songname must be longer then three letters and be in a subfolder like SongName/info.json");}
 //if(empty($json["songSubName"])){die("Missing SongSub Name");}
 if(empty($json["authorName"])){die("Missing Author Name in the info.js");}
 if(empty($json["beatsPerMinute"])){die("Missing BPM in the info.js");}

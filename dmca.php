@@ -1,5 +1,6 @@
 <?php
 require("config.php");
+$pagetitle = "Beat Saver - DMCA";
 require("header.php");
 ?>
     <div class="container">

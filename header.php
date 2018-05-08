@@ -27,7 +27,8 @@
           <ul class="nav navbar-nav">
             <li class="active"><a href="index.php">Home</a></li>
             <li><a href="topdl.php">Top Downloads</a></li>
-            <li><a href="browse.php">Browse</a></li>
+	    <li><a href="topstar.php">Top Rated</a></li>
+            <li><a href="browse.php">Newest</a></li>
 	    <li><a href="https://github.com/xyonico/BeatSaberSongInjector/releases">Song Injector</a></li>
 	    <li><a href="https://discord.gg/f759rpu">Mod Discord</a></li>
             <?php if(!empty($_SESSION["userdb"][0]["id"])){?><li><a href="upload.php">Upload a BeatTrack</a></li><?php } ?>
