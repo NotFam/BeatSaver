@@ -56,7 +56,6 @@ $database->insert("users", [
 	"resettoken" => $resettoken,
 	"registered" => time()
 ]);
-var_dump( $database->error() );
 $message = "Welcome to BeatSaver\n\nPlease use the link below to set your password for the username: $username\n\nhttps://beatsaver.com/newpassword.php?token=$resettoken\n\n\n";
 
 $from = new SendGrid\Email("BeatSaver", "no-reply@beatsaver.com");
