@@ -40,14 +40,14 @@ $userdb = $database->select("users", [
 	"username" => $username
 ]);
 
-if(!empty($userdb[0])){die("Username Already Exists, Please Try Again");}
+if(!empty($userdb[0]["username"])){die("Username Already Exists, Please Try Again");}
 
 $emaildb = $database->select("users", [
         "email"
 ], [
         "email" => sha1(strtolower($email))
 ]);
-if(!empty($userdb[0])){die("Email Already Exists, Please Try Again");}
+if(!empty($emaildb[0]["email"])){die("Email Already Exists, Please Try Again");}
 
 //insert main userrow
 $database->insert("users", [
@@ -56,7 +56,7 @@ $database->insert("users", [
 	"resettoken" => $resettoken,
 	"registered" => time()
 ]);
-
+var_dump( $database->error() );
 $message = "Welcome to BeatSaver\n\nPlease use the link below to set your password for the username: $username\n\nhttps://beatsaver.com/newpassword.php?token=$resettoken\n\n\n";
 
 $from = new SendGrid\Email("BeatSaver", "no-reply@beatsaver.com");
