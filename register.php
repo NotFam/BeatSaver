@@ -126,9 +126,9 @@ body {
                 <li>Usernames can only be letters and numbers, No spaces or special symbols, will be lowercased and limited to a max length of 16</li>
                 <li>Passwords are stored using <a href="https://en.wikipedia.org/wiki/Bcrypt">BCrypt</a> with a cost of 14 and a random per user salt
         </ul>
-        <label for="inputEmail" class="sr-only">Email address</label>
+        <h3>Email address</h3>
         <input type="email" id="inputEmail" class="form-control" placeholder="Email address" name="email" required autofocus>
-        <label for="inputPassword" class="sr-only">Username</label>
+        <h3>Username</h3>
         <input type="username" id="inputPassword" class="form-control" placeholder="Username" name="username" required>
 	<div class="g-recaptcha" data-sitekey="6LfDxFcUAAAAAISoTxWFoQQURSSCYwXCsSttvWqp"></div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button><br>
