@@ -57,6 +57,7 @@ require("header.php");
 <p></p>
 <p>Designated Agent to Receive Notification of Claimed Infringement:</p>
 <p>Email: dmca@jrwr.io (72 hour response guaranteed) 
+<br><br><br>
 	</div>
       <hr>
     </div> <!-- /container -->

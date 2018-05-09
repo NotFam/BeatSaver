@@ -1,7 +1,7 @@
 <?php
 require("config.php");
 $offset = (int) @$_GET["off"];
-$bt = $database->select("beats", [
+$bt = qcache($database, "topdl".$offset, "beats", [
 	"id",
 	"beatname",
 	"ownerid",

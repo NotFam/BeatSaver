@@ -6,7 +6,7 @@ $offset = (int) @$_GET["off"];
 if(empty($_GET['mode'])){$_GET['mode'] = 'top';}
 
 if(@$_GET['mode'] == 'top'){
-$bt = $database->select("beats", [
+$bt = qcache($database, "topdlapi".$offset, "beats", [
         "id",
         "beatname",
         "ownerid",
@@ -31,7 +31,7 @@ echo json_encode($bt, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AM
 }
 
 if(@$_GET['mode'] == 'new'){
-$bt = $database->select("beats", [
+$bt = qcache($database, "newapi".$offset, "beats", [
         "id",
         "beatname",
         "ownerid",
@@ -57,7 +57,7 @@ echo json_encode($bt, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AM
 }
 
 if(@$_GET['mode'] == 'star'){
-$bt = $database->select("beats", [
+$bt = qcache($database, "starapi".$offset, "beats", [
         "id",
         "beatname",
         "ownerid",

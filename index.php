@@ -1,23 +1,23 @@
 <?php
 require("config.php");
 $offset = (int) @$_GET["off"];
-$bt = $database->select("beats", [
-	"id",
-	"beatname",
-	"ownerid",
-	"downloads",
-	"upvotes",
-	"beattext",
-	"uploadtime",
-	"songName",
-	"songSubName",
-	"authorName",
-	"beatsPerMinute",
-	"difficultyLevels",
-	"img"
-], [
-	'LIMIT' => [$offset, 15],
-	"ORDER" => ["downloads" => "DESC",]
+$bt = qcache($database, "index".$offset, "beats", [
+        "id",
+        "beatname",
+        "ownerid",
+        "downloads",
+        "upvotes",
+        "beattext",
+        "uploadtime",
+        "songName",
+        "songSubName",
+        "authorName",
+        "beatsPerMinute",
+        "difficultyLevels",
+        "img"
+],[
+        'LIMIT' => [$offset, 15],
+        "ORDER" => ["downloads" => "DESC",]
 ]);
 $pagetitle = "Beat Saver ";
 require("header.php");
