@@ -16,7 +16,10 @@ if ($zip) {
 	echo zip_entry_name($zip_entry) . PHP_EOL;
         if(strpos(zip_entry_name($zip_entry), "info.json") > 3){
         if (zip_entry_open($zip, $zip_entry, "r")) {
-            $json = json_decode(zip_entry_read($zip_entry, zip_entry_filesize($zip_entry)), TRUE);
+	    $rawdata = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', zip_entry_read($zip_entry, zip_entry_filesize($zip_entry)));
+            $json = json_decode($rawdata, TRUE);
+	    echo "Detected Info.json".PHP_EOL."Raw:".$rawdata.PHP_EOL."JSON: ";
+	    var_dump($json);
             zip_entry_close($zip_entry);
         }
 	}
