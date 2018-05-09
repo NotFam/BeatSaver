@@ -48,7 +48,6 @@ if ($zip2) {
 }
 zip_close($zip2);
 if(empty($imgdata)){die("Failed to Extract Image Data");}
-echo "</pre>";
 
 
 /// SCOREBOARD MD5
@@ -59,7 +58,6 @@ $zip = zip_open($_FILES["fileupload"]["tmp_name"]);
 if ($zip) {
 //Search 1 -- Look for info.json
     while ($zip_entry = zip_read($zip)) {
-        echo zip_entry_name($zip_entry) . PHP_EOL;
         if(strpos(zip_entry_name($zip_entry), $lvl["jsonPath"]) > 3){
         if (zip_entry_open($zip, $zip_entry, "r")) {
             $rawlvldata .= preg_replace('/[\x00-\x1F\x80-\xFF]/', '', zip_entry_read($zip_entry, zip_entry_filesize($zip_entry)));
