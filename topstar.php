@@ -2,31 +2,7 @@
 require("config.php");
 $offset = (int) @$_GET["off"];
 
-$m = new Memcached();
-$m->addServer('localhost', 11211);
-
-$bt = $database->select("beats", [
-	"id",
-	"beatname",
-	"ownerid",
-	"downloads",
-	"upvotes",
-	"beattext",
-	"uploadtime",
-	"songName",
-	"songSubName",
-	"authorName",
-	"beatsPerMinute",
-	"difficultyLevels",
-	"img"
-], [
-	'LIMIT' => [$offset, 15],
-	"ORDER" => ["upvotes" => "DESC",]
-]);
-
-if (!($bt = $m->get('topstar'.$offset))) {
-    if ($m->getResultCode() == Memcached::RES_NOTFOUND) {
-$bt = $database->select("beats", [
+$bt = qcache($database, "topstar".$offset, "beats", [
         "id",
         "beatname",
         "ownerid",
@@ -44,32 +20,6 @@ $bt = $database->select("beats", [
         'LIMIT' => [$offset, 15],
         "ORDER" => ["upvotes" => "DESC",]
 ]);
-        $m->set('topstar'.$offset, $bt, 120);
-    } else {
-
-//error
-$bt = $database->select("beats", [
-        "id",
-        "beatname",
-        "ownerid",
-        "downloads",
-        "upvotes",
-        "beattext",
-        "uploadtime",
-        "songName",
-        "songSubName",
-        "authorName",
-        "beatsPerMinute",
-        "difficultyLevels",
-        "img"
-], [
-        'LIMIT' => [$offset, 15],
-        "ORDER" => ["upvotes" => "DESC",]
-]);
-
-
-    }
-}
 
 $pagetitle = "Beat Saver - Top Rated";
 require("header.php");
