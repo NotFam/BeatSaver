@@ -38,7 +38,7 @@ $zip2 = zip_open($_FILES["fileupload"]["tmp_name"]);
 if ($zip2) {
 //Search 2 -- Look for coverart // TODO CHECK IMAGE SIZE
     while ($zip2_entry = zip_read($zip2)) {
-        if(strpos(zip_entry_name($zip2_entry), $json["coverImagePath"]) !== false){
+        if(strpos(strtolower(zip_entry_name($zip2_entry)), strtolower($json["coverImagePath"])) !== false){
         if (zip_entry_open($zip2, $zip2_entry, "r")) {
             $imgdata = zip_entry_read($zip2_entry, zip_entry_filesize($zip2_entry));
             zip_entry_close($zip2_entry);
@@ -62,7 +62,7 @@ if(strlen($beatdesc) < 6){die("Too short of a Desc, Needs to be longer then 6 le
 
 // everything is good, database, then img then zip!
 
-$path_parts = pathinfo($json["coverImagePath"]);
+$path_parts = pathinfo(strtolower($json["coverImagePath"]));
 $imageFileType  = $path_parts['extension'];
 if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) {
     die("Sorry, only JPG, JPEG, PNG & GIF files are allowed for album art");
