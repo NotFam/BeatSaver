@@ -24,6 +24,7 @@ $bt = $database->select("beats", [
 if(!empty($bt[0]["id"])){
 $database->delete("beats", [ "id" => $_GET['id'] ]);
 $database->delete("votes", [ "beatid" => $_GET['id'] ]);
+$database->delete("diffmap", [ "beatid" => $_GET['id'] ]);
 unlink("files/".$bt[0]["id"].".zip");
 unlink("img/".$bt[0]["id"].'.'.$bt[0]["img"]);
 }

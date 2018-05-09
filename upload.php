@@ -50,6 +50,41 @@ zip_close($zip2);
 if(empty($imgdata)){die("Failed to Extract Image Data");}
 echo "</pre>";
 
+
+/// SCOREBOARD MD5
+
+$rawlvldata = "";
+foreach($json["difficultyLevels"] as $lvl){
+$zip = zip_open($_FILES["fileupload"]["tmp_name"]);
+if ($zip) {
+//Search 1 -- Look for info.json
+    while ($zip_entry = zip_read($zip)) {
+        echo zip_entry_name($zip_entry) . PHP_EOL;
+        if(strpos(zip_entry_name($zip_entry), $lvl["jsonPath"]) > 3){
+        if (zip_entry_open($zip, $zip_entry, "r")) {
+            $rawlvldata .= preg_replace('/[\x00-\x1F\x80-\xFF]/', '', zip_entry_read($zip_entry, zip_entry_filesize($zip_entry)));
+            zip_entry_close($zip_entry);
+        }
+        }
+    }
+}
+zip_close($zip);
+}
+
+$findlvl = $database->select("diffmap", [
+        "beatid",
+        "hash",
+        "id"
+], [
+        "hash" => md5($rawlvldata)
+]);
+
+if(!empty($findlvl[0]["beatid"])){die("Song already exists in the database. Please don't upload other people's work!");}
+
+
+//////////////
+
+
 $beattitle = htmlentities(substr($_POST["beattitle"], 0, 160), ENT_QUOTES | ENT_HTML5,'ISO-8859-1', true);
 $beatdesc = htmlentities(substr($_POST["beatdesc"], 0, 4096), ENT_QUOTES | ENT_HTML5,'ISO-8859-1', true);
 
@@ -81,6 +116,13 @@ $database->insert("beats", [
 	"img"	=> $imageFileType
 ]);
 $uid = $database->id();
+
+$database->insert("diffmap", [
+	"beatid" => $uid,
+	"hash"	=> md5($rawlvldata),
+	"diffmeta" => $json["difficultyLevels"]
+]);
+
 $target_file = "files/" . $uid . ".zip";
 if (move_uploaded_file($_FILES["fileupload"]["tmp_name"], $target_file)) {
 	file_put_contents("img/$uid.".$imageFileType, $imgdata);
