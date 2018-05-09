@@ -1,6 +1,6 @@
 <?php
 require("config.php");
-$bt = $database->select("beats", [
+$bt = qcache($database, "details".$_GET["id"], "beats", [
 	"id",
 	"beatname",
 	"ownerid",
