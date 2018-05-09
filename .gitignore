@@ -1,5 +1,5 @@
 track*
-config*
+config.php
 phpadmin*
 .well-known*
 files*
