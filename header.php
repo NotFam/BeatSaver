@@ -32,7 +32,8 @@
 	    <li><a href="topstar.php">Top Rated</a></li>
             <li><a href="browse.php">Newest</a></li>
 	    <li><a href="https://github.com/xyonico/BeatSaberSongInjector/releases">Song Injector</a></li>
-	    <li><a href="https://discord.gg/f759rpu">Mod Discord</a></li>
+	    <li><a href="https://discord.gg/f759rpu">Discord</a></li>
+	    <li><a href="https://wiki.beatsaver.com">Wiki</a></li>
             <?php if(!empty($_SESSION["userdb"][0]["id"])){?><li><a href="upload.php">Upload a BeatTrack</a></li><?php } ?>
             <?php if(empty($_SESSION["userdb"][0]["id"])){?><li><a href="login.php">Login / Register</a></li><?php } ?>
             <?php if(!empty($_SESSION["userdb"][0]["id"])){?><li><a href="profile.php"><?php echo $_SESSION["userdb"][0]["username"];?></a></li><?php } ?>
