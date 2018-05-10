@@ -117,3 +117,32 @@ $bt[$key]["difficultyLevels"] = json_decode($bt[$key]["difficultyLevels"]);
 echo json_encode($bt, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PRETTY_PRINT);
 }
 
+
+if(@$_GET['mode'] == 'votekey'){
+if(!empty($_POST["username"]) AND !empty($_POST["password"])){
+$userdb = $database->select("users", [
+        "username",
+        "password",
+        "id",
+	"votekey"
+], [
+        "username" => strtolower(preg_replace("/[^a-zA-Z0-9]+/", "", $_POST["username"]))
+]);
+if(empty($userdb[0]["username"])){die("Username Not Found");}
+if(empty($userdb[0]["password"])){die("Password not set, Use the Password Reset form to resend the email");}
+if(!password_verify($_POST["password"], $userdb[0]["password"])){die("Invaild Password, Please go back and try again");}else{
+if(empty($userdb[0]["votekey"])){
+$token = trim(file_get_contents("/proc/sys/kernel/random/uuid"));
+$database->update("users", [
+        "votekey" => $token
+], [
+        "id" => $userdb[0]["id"]
+]);
+
+}else{$token = $userdb[0]["votekey"];}
+echo json_encode($token);
+die();
+}
+}
+}
+
