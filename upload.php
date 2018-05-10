@@ -58,7 +58,7 @@ $zip = zip_open($_FILES["fileupload"]["tmp_name"]);
 if ($zip) {
 //Search 1 -- Look for info.json
     while ($zip_entry = zip_read($zip)) {
-        if(strpos(zip_entry_name($zip_entry), $lvl["jsonPath"]) > 3){
+        if(strpos(strtolower(zip_entry_name($zip_entry)), strtolower($lvl["jsonPath"])) > 3){
         if (zip_entry_open($zip, $zip_entry, "r")) {
             $rawlvldata .= preg_replace('/[\x00-\x1F\x80-\xFF]/', '', zip_entry_read($zip_entry, zip_entry_filesize($zip_entry)));
             zip_entry_close($zip_entry);
@@ -76,8 +76,8 @@ $findlvl = $database->select("diffmap", [
 ], [
         "hash" => md5($rawlvldata)
 ]);
-
-if(!empty($findlvl[0]["beatid"])){die("Song already exists in the database. Please don't upload other people's work!");}
+if(md5($rawlvldata) == "d41d8cd98f00b204e9800998ecf8427e"){die("Upload Error, Unable to Calc the Level ID");}
+if(!empty($findlvl[0]["beatid"])){var_dump($findlvl);die("Song already exists in the database. Please don't upload other people's work!");}
 
 
 //////////////
